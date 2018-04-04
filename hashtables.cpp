@@ -36,7 +36,7 @@ struct label{
 
 //string address ; 
 string value ;
-//string block ;  
+string block ;  
 char exist ; 
 
 label(){
