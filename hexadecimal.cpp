@@ -102,12 +102,17 @@ string ToHexaDecimal(int value){
 
 // Convert a hexadecimal format to decimal value 
 int ToDecimal(string value){
-	int temp = 0 ; 
-	for (int i= (value.length()-1) ; i>=0 ; i--){
-		temp = temp + HexaToDecimal(value[i])*pow(16 , i) ;   
-	}
-
-	return temp ; 
+	
+    int l=value.length()-1 ;
+    int current=1  ;
+    int temp = 0 ;
+    while(l>=0)
+    {
+        temp+=(HexaToDecimal(value[l])*current);
+        current=16;
+        --l;
+    }
+    return temp ;
 
 }
 
@@ -124,7 +129,3 @@ string ExtendHexaCode(int digits , string hexa){
 }
 
 
-// int main(){
-
-// 	cout<<ToHexaDecimal(63);
-// }
