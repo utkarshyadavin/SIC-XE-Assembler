@@ -2,6 +2,10 @@
 
 The given codebase implements the two pass SIC-XE Assembler.
 
+The following features of the SIC-XE Machine Assembler have been implemented: 
+  - : Program Blocks
+  - : Modification Records
+
 
 How to run: 
 
@@ -14,7 +18,7 @@ How to run:
    - error.txt  : Contains all the error statements generated during the run. 
    - object.txt : Contains the Object Code. 
    - modification.txt : Consists of the modification record. 
-   - list/txt : This will contain the entire list of commands with the object code for each 
+   - list.txt : This will contain the entire list of commands with the object code for each 
       command, line nimbers, program block number and address. 
      
    
