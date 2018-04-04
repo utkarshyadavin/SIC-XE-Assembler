@@ -1,0 +1,2 @@
+LINE 20 : Opcode was not found
+Line 25Duplicate Symbol Detected
