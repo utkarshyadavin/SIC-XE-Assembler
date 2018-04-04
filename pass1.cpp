@@ -1,4 +1,4 @@
-
+	
 #include <iostream>
 #include <fstream> 
 #include <string>
@@ -90,14 +90,6 @@ bool error_flag = 0 ;
 
 
 
-// Creating tables and opening files
-
-void open(){
-	create() ; 
-	inFile.open("input.txt");
-	outFile.open("interm.txt");
-	errorFile.open("error.txt");
-}
 
 
 string getBlock(int number){
@@ -116,7 +108,11 @@ void makepass (string[] , int) ;
 
 void run(){
 
-	open() ; 
+	 
+	create() ; 
+	inFile.open("input.txt");
+	outFile.open("interm.txt");
+	errorFile.open("error.txt");
 	string s ; 
 	string word[5] ; 
 	int count =  0 ; 
@@ -125,6 +121,17 @@ void run(){
 	char ch ; 
 
 	getTokens(s , word , count);
+
+	while(count==0)
+    {
+        outFile<<line<<endl;
+        outFile<<"$";
+        outFile<<s<<endl;
+        outFile<<""<<endl;
+        outFile<<""<<endl;    
+        line+=5;
+        cout<<"s: "<<s<<endl;
+    }
 
 	//while(count==0){
 
@@ -176,6 +183,7 @@ void run(){
 		line+=5 ; 
 		cout<<"s: "<<s<<endl;
 		outFile << line << "\n" ; 
+		
 
 
 		if(count == 0 ){
@@ -216,6 +224,7 @@ void run(){
  		}
  	
 
+outFile.close() ; 
 
 }
 
@@ -272,6 +281,7 @@ void makepass(string word[] , int count){
         outFile<< LOCCTR <<"\n" ;
         LOCCTR = ToHexaDecimal(ToDecimal(LOCCTR)+4) ; 
         outFile << LOCCTR << "\n" ;
+        return ;
 	}
 
 	if(OPTABLE[word[0]].exist=='y'){
@@ -283,10 +293,12 @@ void makepass(string word[] , int count){
 		outFile <<LOCCTR << "\n" ; 
 		LOCCTR = ToHexaDecimal(ToDecimal(LOCCTR) + OPTABLE[word[0]].format) ;
 		outFile<<LOCCTR<< "\n"; 
+		return ;
 
 	}
 
 	if(OPTABLE[word[0]].exist == 'n'){
+
 
 		if(SYMTAB[word[0]].exist=='y'){
 			// Duplicate symbol , so generate error 
@@ -310,8 +322,6 @@ void makepass(string word[] , int count){
             if(word[1][0]=='+')
             	LOCCTR=ToHexaDecimal(ToDecimal(LOCCTR)+4);
             else if(OPTABLE[word[1]].exist == 'y'){
-            	cout<<"............"<<OPTABLE[word[1]].format<<"\n " ; 
-            	cout<<ToDecimal(LOCCTR)<<".............................." ; 
             	LOCCTR=ToHexaDecimal(ToDecimal(LOCCTR)+OPTABLE[word[1]].format);
             }
             else if(word[1]=="WORD")
@@ -335,11 +345,6 @@ void makepass(string word[] , int count){
 	}
 }
 
-
- int main(){
-
-
-	run() ; 
-
-
- }
+// int main(){
+// 	run() ; 
+// }

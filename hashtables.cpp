@@ -336,3 +336,16 @@ OPTABLE["WD"].format = 3 ;
 OPTABLE["WD"].exist = 'y' ; 
 
 }
+
+
+
+int reg_num(char a)
+{
+    if(a=='A') return 0;
+    if(a=='X') return 1;
+    if(a=='L') return 2;
+    if(a=='B') return 3;
+    if(a=='S') return 4;
+    if(a=='T') return 5;
+    if(a=='F') return 6;
+}

@@ -1,41 +1,49 @@
-FIBO    START  0
-FIRST   LDT    #1
-        LDS    #10
-        +JSUB  RDREC
-        +JSUB  WRREC
-LENGTH  RESW   1
+PALIND   START   0
+FIRST    LDB     #1
+CLOOP    +JSUB   RDREC
+         LDA     LENGTH
+         COMP    #0
+         JEQ     CLOOP
+         LDT     #LENGTH
+         SUBR    B,T
+         +JSUB   CMPREC
+LENGTH   RESW    1
 .
-. SUBROUTINE RDREC
+. SUBROUTINE READ RECORD
 .
-RDREC   CLEAR  A
-RLOOP   TD     INPUT
-        JEQ    RLOOP
-        RD     INPUT
-        COMPR  A,T
-        JLT    RLOOP
-        COMPR  A,S
-        JGT    RLOOP
-        STA    LENGTH
-        RSUB
-INPUT   BYTE   X'F1'
+RDREC    CLEAR   X
+         CLEAR   A
+         CLEAR   S
+         +LDT    #4096
+RLOOP    TD      INPUT
+         JEQ     RLOOP
+         RD      INPUT
+         COMPR   A,S
+         JEQ     EXIT1
+         STCH    BUFFER,X
+         TIXR    T
+         JLT     RLOOP
+EXIT1    STX     LENGTH
+         RSUB
+INPUT    BYTE    X'F1'
 .
-. SUBROUTINE WDREC
+. SUBROUTINE COMPARE RECORD
 .
-WRREC   LDX    #0
-        LDS    #1
-        LDA    #0
-        LDT    LENGTH
-WLOOP   TD     OUTPUT
-        JEQ    WLOOP
-        WD     OUTPUT
-        ADDR   S,A
-        STA    VALUE1
-        STS    VALUE2
-        LDA    VALUE2
-        LDS    VALUE1
-        TIXR   T 
-        JLT    WLOOP
-OUTPUT  BYTE   X'05'
-VALUE1  RESW   1
-VALUE12  RESW   1
-        END FIRST
+CMPREC   CLEAR   A
+         COMPR   X,T
+         JEQ     EXIT2
+         JGT     EXIT2
+         LDA     BUFFER,X
+         LDS     BUFFER,T
+         SUBR    B,T
+         ADDR    B,X
+         COMPR   A,S
+         JEQ     CMPREC
+         JLT     ERROR
+         JGT     ERROR
+EXIT2    LDA     #1
+         STA     RESULT
+ERROR    RSUB
+RESULT   RESW    1
+BUFFER   RESB    4096
+         END     FIRST
